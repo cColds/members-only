@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <%- include('./partials/head.ejs') %>
+
+  <body>
+    <%- include('./partials/header.ejs') %>
+    <main>
+      <h1><%= title %></h1>
+      <form method="post">
+        <h2>Sign Up</h2>
+        <label for="sign-up-name">
+          Name
+          <input
+            type="text"
+            id="sign-up-name"
+            placeholder="Name"
+            name="name"
+            value="<%= Object.keys(errors).length ? body.name : ''%>"
+            required
+            maxlength="50"
+          />
+        </label>
+        <% if (errors.name) { %>
+        <p class="text-error"><%= errors.name.msg %></p>
+        <% } %>
+
+        <label for="sign-up-email">
+          Email
+          <input
+            type="email"
+            id="sign-up-email"
+            placeholder="Email"
+            name="email"
+            value="<%= Object.keys(errors).length ? body.email : ''%>"
+            pattern="^\S+@\S+\.\S+$"
+            maxlength="75"
+            required
+          />
+        </label>
+        <% if (errors.email) { %>
+        <p class="text-error"><%= errors.email.msg %></p>
+        <% } %>
+
+        <label for="sign-up-password">
+          Password
+          <input
+            type="password"
+            id="sign-up-password"
+            placeholder="Password"
+            name="password"
+            required
+          />
+        </label>
+        <% if (errors.password) { %>
+        <p class="text-error"><%= errors.password.msg %></p>
+        <% } %>
+
+        <label for="sign-up-confirm-password"
+          >Confirm Password
+          <input
+            type="password"
+            id="sign-up-confirm-password"
+            placeholder="Confirm Password"
+            name="confirm-password"
+            required
+        /></label>
+        <% if (errors["confirm-password"]) { %>
+        <p class="text-error"><%= errors["confirm-password"].msg %></p>
+        <% } %>
+
+        <button class="submit-btn">Sign Up</button>
+      </form>
+    </main>
+  </body>
+</html>
