@@ -76,7 +76,12 @@ router.post(
           member: false,
         });
         await user.save();
-        res.redirect("/");
+
+        req.login(user, (err) => {
+          if (err) return next(err);
+
+          return res.redirect("/");
+        });
       } catch (e) {
         console.error("Error: ", e);
         return next(e);
