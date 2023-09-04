@@ -2,9 +2,16 @@
   <nav>
     <a href="/" class="logo">Members Only</a>
     <ul class="nav-links">
+      <% if (locals.currentUser) { %>
+      <li><a href="/logout">Log Out</a></li>
+      <% } else { %>
+      <li>
+        <a href="/login">Login</a>
+      </li>
       <li>
         <a href="/sign-up">Sign Up</a>
       </li>
+      <% } %>
     </ul>
   </nav>
 </header>

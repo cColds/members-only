@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <%- include('./partials/head.ejs') %>
+
+  <body>
+    <%- include('./partials/header.ejs') %>
+    <main>
+      <h1><%= title %></h1>
+      <form method="post">
+        <h2>Login</h2>
+        <label for="login-email">
+          Email
+          <input
+            type="email"
+            id="login-email"
+            placeholder="Email"
+            name="email"
+            value="<%= Object.keys(errors).length ? body.email : ''%>"
+            pattern="^\S+@\S+\.\S+$"
+            maxlength="75"
+            required
+          />
+        </label>
+        <% if (errors.email) { %>
+        <p class="text-error"><%= errors.email.msg %></p>
+        <% } %>
+
+        <label for="login-password">
+          Password
+          <input
+            type="password"
+            id="login-password"
+            placeholder="Password"
+            name="password"
+            required
+          />
+        </label>
+        <% if (errors.password) { %>
+        <p class="text-error"><%= errors.password.msg %></p>
+        <% } %>
+
+        <button class="submit-btn">Login</button>
+      </form>
+    </main>
+  </body>
+</html>

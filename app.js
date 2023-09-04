@@ -2,11 +2,14 @@ require("dotenv").config();
 const createError = require("http-errors");
 const express = require("express");
 const session = require("express-session");
+const bcrypt = require("bcryptjs");
 const path = require("path");
 const passport = require("passport");
+const LocalStrategy = require("passport-local");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
+const User = require("./models/User");
 
 const indexRouter = require("./routes/index");
 
@@ -40,8 +43,45 @@ app.use(
     saveUninitialized: true,
   })
 );
+passport.use(
+  new LocalStrategy(
+    { usernameField: "email" },
+    async (email, password, done) => {
+      try {
+        const user = await User.findOne({ email });
+        if (!user) return done(null, false, { message: "Incorrect email" });
+
+        const match = await bcrypt.compare(password, user.password);
+        if (!match) {
+          return done(null, false, { message: "Incorrect password" });
+        }
+
+        return done(null, user);
+      } catch (err) {
+        console.error("error: ", err);
+        return done(err);
+      }
+    }
+  )
+);
+passport.serializeUser(function (user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async function (id, done) {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (err) {
+    done(err);
+  }
+});
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(function (req, res, next) {
+  res.locals.currentUser = req.user;
+  next();
+});
 
 // routes
 app.use("/", indexRouter);
