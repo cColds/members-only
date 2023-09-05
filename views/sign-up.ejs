@@ -5,6 +5,8 @@
   <body>
     <%- include('./partials/header.ejs') %>
     <main>
+      <% if (!locals.currentUser) { %>
+
       <h1><%= title %></h1>
       <form method="post">
         <h2>Sign Up</h2>
@@ -70,6 +72,7 @@
 
         <button class="submit-btn">Sign Up</button>
       </form>
+      <% } %>
     </main>
   </body>
 </html>
