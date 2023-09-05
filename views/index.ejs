@@ -28,6 +28,10 @@
             <h3><%= message.message %></h3>
             <p class="message-note"><strong>Note:</strong> Become a member to see the author and date</p>
             <% } %>
+            
+            <% if (locals.currentUser?.admin) { %>
+              <a href="/delete/<%= message.id %>">Delete</a>
+              <% } %>
           </div>
             <% })%>
       </div>

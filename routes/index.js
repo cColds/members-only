@@ -10,9 +10,6 @@ const router = express.Router();
 /* GET home page. */
 router.get("/", async (req, res) => {
     const messages = await Message.find().populate("author").sort({ date: -1 });
-
-    console.log(messages);
-
     res.render("index", { title: "Members Only", messages });
 });
 
@@ -203,5 +200,45 @@ router.post(
         }
     }
 );
+
+router.get("/become-admin", (req, res, next) => {
+    res.render("become-admin", { title: "Become Admin", errors: {} });
+});
+
+router.post("/become-admin", async (req, res, next) => {
+    const isAdminCode = process.env.ADMIN_CODE === req.body.admin;
+    if (!isAdminCode) {
+        res.render("become-admin", {
+            title: "Become Admin",
+            errors: { admin: "Incorrect admin code" },
+        });
+        return;
+    }
+
+    const { user } = req;
+    await User.updateOne(
+        { email: user.email },
+        { admin: true },
+        { upsert: true }
+    );
+
+    res.redirect("/");
+});
+
+router.get("/delete/:id", async (req, res, next) => {
+    const message = await Message.findById(req.params.id).populate("author");
+    res.render("delete-message", { title: "Delete Message", message });
+});
+
+router.post("/delete/:id", async (req, res, next) => {
+    if (!req.user?.admin) {
+        res.redirect("/");
+        return;
+    }
+
+    await Message.findByIdAndDelete(req.params.id);
+
+    res.redirect("/");
+});
 
 module.exports = router;

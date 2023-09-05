@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <%- include('./partials/head.ejs') %>
+
+  <body>
+    <%- include('./partials/header.ejs') %>
+    <main>
+      <% if (locals.currentUser?.member && !locals.currentUser?.admin) { %>
+      <form method="post">
+        <h1>Become Admin</h1>
+        <label for="admin-code">
+          Enter admin code
+          <input
+            type="text"
+            id="admin-code"
+            placeholder="Admin Code"
+            name="admin"
+            required
+          />
+        </label>
+        <% if (errors.admin) { %>
+        <p class="text-error"><%= errors.admin %></p>
+        <% } %>
+
+        <button class="submit-btn">Become Admin</button>
+      </form>
+      <% } %>
+    </main>
+  </body>
+</html>

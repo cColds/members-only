@@ -2,9 +2,14 @@
   <nav>
     <a href="/" class="logo">Members Only</a>
     <ul class="nav-links">
-      <% if (locals.currentUser) { %> <% if (!locals.currentUser.member) {%>
-      <li><a href="/join">Join Club</a></li>
-      <% }%>
+      <% if (locals.currentUser) { %> 
+        <% if (!locals.currentUser.member) {%>
+        <li><a href="/join">Join Club</a></li>
+        <% }%>
+        <% if (locals.currentUser.member && !locals.currentUser.admin) { %>
+        <li><a href="/become-admin">Become Admin</a></li>
+        <% } %>
+        
       <li><a href="/new">New Message</a></li>
       <li><a href="/logout">Log Out</a></li>
       <% } else { %>

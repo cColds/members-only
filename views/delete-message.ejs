@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <%- include('./partials/head.ejs') %>
+
+  <body>
+    <%- include('./partials/header.ejs') %>
+    <main>
+      <% if (locals.currentUser?.admin) { %>
+      <form method="post">
+        <h1 class="delete-info">Delete <%= message.title %> by <strong><%= message.author.name %></strong> </h1>
+        <button class="submit-btn">Delete</button>
+      </form>
+      <% } %>
+    </main>
+  </body>
+</html>
