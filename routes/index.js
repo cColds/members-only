@@ -97,16 +97,24 @@ router.post(
 );
 
 router.get("/login", (req, res) => {
-  res.render("login", { title: "Members Only", errors: {}, body: {} });
+  res.render("login", { title: "Members Only", errors: {} });
 });
 
-router.post(
-  "/login",
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/login",
-  })
-);
+router.post("/login", (req, res, next) => {
+  passport.authenticate("local", (err, user, options) => {
+    if (err) return next(err);
+    if (!user) {
+      res.render("login", { title: "Members Only", errors: options.errors });
+      return;
+    }
+
+    req.login(user, (err) => {
+      if (err) return next(err);
+
+      return res.redirect("/");
+    });
+  })(req, res, next);
+});
 
 router.get("/logout", (req, res, next) => {
   req.logout((err) => {

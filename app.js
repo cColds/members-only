@@ -49,11 +49,14 @@ passport.use(
     async (email, password, done) => {
       try {
         const user = await User.findOne({ email });
-        if (!user) return done(null, false, { message: "Incorrect email" });
+        if (!user)
+          return done(null, false, { errors: { email: "Email not found" } });
 
         const match = await bcrypt.compare(password, user.password);
         if (!match) {
-          return done(null, false, { message: "Incorrect password" });
+          return done(null, false, {
+            errors: { password: "Incorrect password" },
+          });
         }
 
         return done(null, user);

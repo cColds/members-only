@@ -16,14 +16,13 @@
             id="login-email"
             placeholder="Email"
             name="email"
-            value="<%= Object.keys(errors).length ? body.email : ''%>"
             pattern="^\S+@\S+\.\S+$"
             maxlength="75"
             required
           />
         </label>
         <% if (errors.email) { %>
-        <p class="text-error"><%= errors.email.msg %></p>
+        <p class="text-error"><%= errors.email %></p>
         <% } %>
 
         <label for="login-password">
@@ -37,7 +36,7 @@
           />
         </label>
         <% if (errors.password) { %>
-        <p class="text-error"><%= errors.password.msg %></p>
+        <p class="text-error"><%= errors.password %></p>
         <% } %>
 
         <button class="submit-btn">Login</button>
