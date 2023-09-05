@@ -123,4 +123,25 @@ router.get("/logout", (req, res, next) => {
   });
 });
 
+router.get("/join", (req, res, next) => {
+  res.render("join-club", { title: "Join Club", errors: {} });
+});
+
+router.post("/join", async (req, res, next) => {
+  const isSecretCode = process.env.SECRET_CODE === req.body.secret;
+
+  if (!isSecretCode) {
+    res.render("join-club", {
+      title: "Join Club",
+      errors: { secret: "Secret code is incorrect" },
+    });
+    return;
+  }
+
+  const { id } = req.user;
+  await User.findByIdAndUpdate(id, { member: true });
+
+  res.redirect("/");
+});
+
 module.exports = router;

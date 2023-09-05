@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <%- include('./partials/head.ejs') %>
+
+  <body>
+    <%- include('./partials/header.ejs') %>
+    <main>
+      <% if (locals.currentUser && !locals.currentUser.member) { %>
+      <form method="post">
+        <h1>Join Club</h1>
+        <label for="secret-code">
+          Enter secret code
+          <input
+            type="text"
+            id="secret-code"
+            placeholder="Secret Code"
+            name="secret"
+            required
+          />
+        </label>
+        <% if (errors.secret) { %>
+        <p class="text-error"><%= errors.secret %></p>
+        <% } %>
+
+        <button class="submit-btn">Join</button>
+      </form>
+      <% } %>
+    </main>
+  </body>
+</html>
