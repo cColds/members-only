@@ -31,6 +31,12 @@ router.post(
     .withMessage("Email must be 75 characters or less")
     .matches(/^\S+@\S+\.\S+$/)
     .withMessage("Email must be in the format of example@gmail.com")
+    .custom(async (email) => {
+      const existingEmail = await User.findOne({ email });
+      if (existingEmail) throw new Error("Email already in use");
+
+      return true;
+    })
     .escape(),
   body("password")
     .trim()
