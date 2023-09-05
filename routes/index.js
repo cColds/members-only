@@ -8,8 +8,12 @@ const Message = require("../models/Message");
 const router = express.Router();
 
 /* GET home page. */
-router.get("/", (req, res) => {
-  res.render("index", { title: "Members Only" });
+router.get("/", async (req, res) => {
+  const messages = await Message.find().populate("author");
+
+  console.log(messages);
+
+  res.render("index", { title: "Members Only", messages });
 });
 
 router.get("/sign-up", (req, res) => {
