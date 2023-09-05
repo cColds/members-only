@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <%- include('./partials/head.ejs') %>
+
+  <body>
+    <%- include('./partials/header.ejs') %>
+    <main>
+      <% if (locals.currentUser) { %>
+      <form method="post">
+        <h1>New Message</h1>
+
+        <label for="title-field">
+          Title
+          <input
+            type="text"
+            id="title-field"
+            name="title"
+            placeholder="Title"
+            value="<%= body.title || '' %>"
+            required
+          />
+        </label>
+        <% if (errors.title) { %>
+        <p class="text-error"><%= errors.title.msg %></p>
+        <% } %>
+
+        <label for="message-field">
+          Message
+          <textarea
+            type="text"
+            id="message-field"
+            placeholder="Message"
+            name="message"
+            rows="8"
+            cols="30"
+            required
+          >
+<%= body.message || '' %></textarea
+          >
+        </label>
+        <% if (errors.message) { %>
+        <p class="text-error"><%= errors.message.msg %></p>
+        <% } %>
+
+        <button class="submit-btn">Submit</button>
+      </form>
+      <% } %>
+    </main>
+  </body>
+</html>

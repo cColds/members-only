@@ -2,7 +2,9 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const { body, validationResult } = require("express-validator");
+const mongoose = require("mongoose");
 const User = require("../models/User");
+const Message = require("../models/Message");
 const router = express.Router();
 
 /* GET home page. */
@@ -143,5 +145,52 @@ router.post("/join", async (req, res, next) => {
 
   res.redirect("/");
 });
+
+router.get("/new", (req, res, next) => {
+  res.render("new-message", { title: "New Message", errors: {}, body: {} });
+});
+
+router.post(
+  "/new",
+  body("title").trim().notEmpty().withMessage("Title cannot be empty"),
+  body("message").trim().notEmpty().withMessage("Message cannot be empty"),
+
+  async (req, res, next) => {
+    const result = validationResult(req);
+
+    if (!result.isEmpty()) {
+      const { errors } = result;
+      let errorsObj = {};
+      for (let i = 0; i < errors.length; i++) {
+        errorsObj[errors[i].path] = errors[i];
+      }
+
+      res.render("new-message", {
+        title: "New Message",
+        errors: errorsObj,
+        body: req.body,
+      });
+      return;
+    }
+
+    try {
+      const { user } = req;
+      const { title, message } = req.body;
+
+      const newMessage = new Message({
+        title,
+        message,
+        author: { _id: new mongoose.Types.ObjectId(user.id) },
+      });
+
+      await newMessage.save();
+
+      res.redirect("/");
+    } catch (e) {
+      console.error("Error: ", e);
+      next(e);
+    }
+  }
+);
 
 module.exports = router;

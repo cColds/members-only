@@ -48,9 +48,14 @@ label {
   gap: 5px;
 }
 
-input {
+input,
+textarea {
   background-color: #f1f5f9;
   outline: 1px solid #94a3b8;
+}
+
+textarea {
+  resize: none;
 }
 
 button {
@@ -61,7 +66,8 @@ button {
 }
 
 button,
-input {
+input,
+textarea {
   padding: 12px 6px;
   border-radius: 5px;
   border: 0;
@@ -73,7 +79,8 @@ button:hover {
 }
 
 button:focus-visible,
-input:focus-visible {
+input:focus-visible,
+textarea:focus-visible {
   outline-color: transparent;
   box-shadow: 0 0 0 2pt #93c5fd;
   outline: 1px solid var(--primary-color);
