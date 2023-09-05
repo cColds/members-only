@@ -10,10 +10,11 @@
 
       <% if (locals.currentUser) { %>
       <p>Welcome, <strong><%= locals.currentUser.name %></strong>!</p>
-
+       
       <div class="messages-wrapper">
-        <% messages.forEach(message => { %>
-        <div class="message-card">
+        <% messages.forEach(message => {%>
+          <div class="message-card">
+          <% if (locals.currentUser.member) { %> 
           <h2 class="message-title"><%= message.title %></h2>
           <p class="message-author">
             by <strong><%= message.author.name %></strong>
@@ -21,8 +22,12 @@
           <p class="message-date"><%= message.formatDate %></p>
 
           <h3><%= message.message %></h3>
-        </div>
-        <% }) %>
+          <% } else { %>
+            <h2 class="message-title"><%= message.title %></h2>
+            <h3><%= message.message %></h3>
+            <p class="message-note"><strong>Note:</strong> Become a member to see the author and date</p>
+          </div>
+            <% } })%>
       </div>
       <% } else { %>
       <p>Login to view messages!</p>

@@ -55,7 +55,7 @@ router.post(
       minUppercase: 1,
     })
     .withMessage(
-      "Password must include at least 8 characters, a number, a symbol, a lowercase and uppercase character"
+      "Password must include at least 8 characters, a number, a symbol, a lowercase and uppercase character",
     ),
   body("confirm-password")
     .custom((value, { req }) => value === req.body.password)
@@ -98,7 +98,7 @@ router.post(
         return next(e);
       }
     });
-  }
+  },
 );
 
 router.get("/login", (req, res) => {
@@ -194,7 +194,7 @@ router.post(
       console.error("Error: ", e);
       next(e);
     }
-  }
+  },
 );
 
 module.exports = router;

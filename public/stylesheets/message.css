@@ -1,35 +1,37 @@
 .messages-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 15px;
-  width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+    width: 100%;
 }
 
 .message-card {
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  padding: 15px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  outline: 1px solid #dce6f3;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    outline: 1px solid #dce6f3;
 }
 
 .message-title {
-  font-size: 20px;
+    font-size: 20px;
 }
 
 .message-author,
-.message-date {
-  font-size: 14px;
-  color: #64748b;
+.message-date,
+.message-note {
+    font-size: 14px;
+    color: #64748b;
 }
 
-.message-author strong {
-  color: black;
+.message-author strong,
+.message-note strong {
+    color: #334155;
 }
 
 h3 {
-  font-size: 16px;
+    font-size: 16px;
 }
