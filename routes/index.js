@@ -39,7 +39,6 @@ router.post(
     })
     .escape(),
   body("password")
-    .trim()
     .notEmpty()
     .withMessage("Password is required")
     .isStrongPassword({
